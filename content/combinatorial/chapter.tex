@@ -37,6 +37,13 @@
 	\subsection{Lucas' Theorem}
 		Let $n,m$ be non-negative integers and $p$ a prime. Write $n=n_kp^k+...+n_1p+n_0$ and $m=m_kp^k+...+m_1p+m_0$. Then $\binom{n}{m} \equiv \prod_{i=0}^k\binom{n_i}{m_i} \pmod{p}$.
 
+	\subsection{Kummer's Theorem}
+	If $q$ is a prime, then the largest power of $q$ that divides ${m + n}\choose {n}$, $m$ and $n$ nonnegative, is the number of carries when $m$ and $n$ are added in base $q$.
+
+	\subsection{Catalan Convolution}
+	${\frac{k}{n+k}} {{2n+k-1} \choose n} \implies 0$ allowed\\
+	${\frac{k}{2n-k}} {{2n-k} \choose n} \implies 0$ not allowed
+
 	\subsection{Binomials}
 		\kactlimport{multinomial.h}
 
