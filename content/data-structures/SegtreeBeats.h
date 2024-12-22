@@ -3,7 +3,7 @@
  * Date: 2009-10-30
  * License: CC0
  * Source: USACO Guide
- * Description: Wavelet Tree
+ * Description: Segment Tree Beats
  * Status: Stress-tested
  */
 const int MAXN = 200001;  // 1-based
