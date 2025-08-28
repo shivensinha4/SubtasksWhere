@@ -1,3 +1,23 @@
+/**
+ * Author: Hari Aakash
+ * Date: 2025-08-29
+ * License: Unlicense
+ * Source: https://github.com/ShahjalalShohag/code-library/blob/main/Geometry/Half%20Plane%20Intersection.cpp
+ * Description:
+\\\begin{minipage}{75mm}
+Returns a vector of the points of the convex polygon formed by the intersection of half planes
+\end{minipage}
+\begin{minipage}{15mm}
+\vspace{-6mm}
+\vspace{-6mm}
+\end{minipage}
+ * Time: O(n \log n)
+ * Status: tested with https://www.codechef.com/problems/ALLPOLY
+*/
+#pragma once
+
+#include "Point.h"
+
 // contains all points p such that: cross(b - a, p - a) >= 0
 template<class P>
 struct HP {
