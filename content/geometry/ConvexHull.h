@@ -20,16 +20,50 @@ Points on the edge of the hull between two other points are not considered part 
 
 #include "Point.h"
 
-typedef Point<ll> P;
-vector<P> convexHull(vector<P> pts) {
-	if (sz(pts) <= 1) return pts;
-	sort(all(pts));
-	vector<P> h(sz(pts)+1);
-	int s = 0, t = 0;
-	for (int it = 2; it--; s = --t, reverse(all(pts)))
-		for (P p : pts) {
-			while (t >= s + 2 && h[t-2].cross(h[t-1], p) <= 0) t--;
-			h[t++] = p;
-		}
-	return {h.begin(), h.begin() + t - (t == 2 && h[0] == h[1])};
+template<class P>
+int orientation(P a, P b, P c) {
+    lli v = a.x*(b.y-c.y)+b.x*(c.y-a.y)+c.x*(a.y-b.y);
+    if (v < 0) return -1; // clockwise
+    if (v > 0) return +1; // counter-clockwise
+    return 0;
+}
+
+template<class P>
+bool cw(P a, P b, P c, bool include_collinear) {
+    int o = orientation(a, b, c);
+    return o < 0 || (include_collinear && o == 0);
+}
+
+template<class P>
+bool collinear(P a, P b, P c) { return orientation(a, b, c) == 0; }
+
+template<class P>
+void convex_hull(vector<P>& a, bool include_collinear = false) {
+    P p0 = *min_element(a.begin(), a.end(), [](P a, P b) {
+        return make_pair(a.y, a.x) < make_pair(b.y, b.x);
+    });
+    sort(a.begin(), a.end(), [&p0](const P& a, const P& b) {
+        int o = orientation(p0, a, b);
+        if (o == 0)
+            return (p0.x-a.x)*(p0.x-a.x) + (p0.y-a.y)*(p0.y-a.y)
+                < (p0.x-b.x)*(p0.x-b.x) + (p0.y-b.y)*(p0.y-b.y);
+        return o < 0;
+    });
+    if (include_collinear) {
+        int i = (int)a.size()-1;
+        while (i >= 0 && collinear(p0, a[i], a.back())) i--;
+        reverse(a.begin()+i+1, a.end());
+    }
+
+    vector<P> st;
+    for (int i = 0; i < (int)a.size(); i++) {
+        while (st.size() > 1 && !cw(st[st.size()-2], st.back(), a[i], include_collinear))
+            st.pop_back();
+        st.push_back(a[i]);
+    }
+
+    if (include_collinear == false && st.size() == 2 && st[0] == st[1])
+        st.pop_back();
+
+    a = st;
 }
